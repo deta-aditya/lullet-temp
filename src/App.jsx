@@ -6,12 +6,17 @@ import PageHeader from "./components/PageHeader";
 import PageBody from "./components/PageBody";
 
 function App() {
-  const [searchQuery] = useState("");
-  const [typeFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
 
   return (
     <Flex h="100vh" flexDir="column">
-      <PageHeader searchQuery={searchQuery} typeFilter={typeFilter} />
+      <PageHeader
+        searchQuery={searchQuery}
+        typeFilter={typeFilter}
+        onSearchQueryChange={setSearchQuery}
+        onTypeFilterChange={setTypeFilter}
+      />
       <PageBody searchQuery={searchQuery} typeFilter={typeFilter} />
     </Flex>
   );
