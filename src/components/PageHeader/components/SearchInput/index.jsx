@@ -2,7 +2,7 @@ import React from "react";
 
 import { Input } from "@chakra-ui/react";
 
-function SearchInput() {
+function SearchInput({ searchQuery }) {
   return (
     <Input
       my="0"
@@ -13,6 +13,7 @@ function SearchInput() {
       border="2px"
       borderColor="gray.200"
       bg="gray.100"
+      value={searchQuery}
     />
   );
 }
