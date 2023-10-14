@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Heading, Card, CardBody, CardHeader, Button } from "@chakra-ui/react";
+import {
+  Heading,
+  Card,
+  CardBody,
+  CardHeader,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 
 import {
   isBulletPointEqual,
@@ -9,6 +16,9 @@ import BulletPoint from "./components/BulletPoint";
 import { changeById } from "../../../../utils/bulletPointList";
 
 function DailyLogCard({ dailyLog, typeFilter }) {
+  const toast = useToast();
+  const [saving, setSaving] = useState(false);
+
   const [bulletPoints, setBulletPoints] = useState(() =>
     dailyLog.bulletPoints.map((bulletPoint) => ({
       ...bulletPoint,
@@ -79,6 +89,35 @@ function DailyLogCard({ dailyLog, typeFilter }) {
     );
   };
 
+  const handleClickSave = async () => {
+    const newDailyLogData = {
+      ...dailyLog,
+      bulletPoints,
+    };
+
+    setSaving(true);
+    try {
+      await fetch("http://localhost:8000/daily-logs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newDailyLogData),
+      });
+      toast({
+        title: "Data has been saved successfully!",
+        status: "success",
+      });
+    } catch (e) {
+      toast({
+        title: "Error when saving data",
+        status: "error",
+      });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <Card width="480px">
       <CardHeader display="flex" alignItems="center" gap="16px">
@@ -91,6 +130,8 @@ function DailyLogCard({ dailyLog, typeFilter }) {
             bg="blue.100"
             h="auto"
             borderRadius="8px"
+            onClick={handleClickSave}
+            isLoading={saving}
           >
             Save
           </Button>
