@@ -28,6 +28,25 @@ The objective of this project is to build Lullet following the Thinking in React
 
 ## Steps
 
-### 1. Identify Components
+### 1. Break the UI into components
 
-Before we jump into making any of the feature, let's try to identify the components from the prototype. 
+Before we jump into making any of the feature, let's try to identify the components from the prototype.
+
+There is no exact rule in identifying components. To keep things consistent, I advise on figuring out which parts of the UI has multiple "variants". These are the potential components, such as:
+
+- Search Input (green)
+- Filter Tab (red)
+- Daily Log Card (yellow)
+- Bullet Item (blue)
+
+<img width="846" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/f0c8cafb-d7dd-4d76-a4ff-54d16e2375fd">
+
+Another easy way to identify potential components is by its hierarchy. In the prototype, it is noticeable that the whole page is divided between header (yellow) and body (red), which are another great potential components.
+
+<img width="846" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/a0f6923f-37c2-46de-9632-3d8d1f855cd1">
+
+Now that we have identify the components, let's start building them.
+
+### 2. Build the static version
+
+
