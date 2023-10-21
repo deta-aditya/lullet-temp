@@ -49,4 +49,7 @@ Now that we have identify the components, let's start building them.
 
 ### 2. Build the static version
 
+We'll be using [Chakra UI](https://chakra-ui.com/)https://chakra-ui.com/ to ease up the stying. Check the diff [here](https://github.com/deta-aditya/lullet-temp/compare/main...2-static-version#diff-d274a54187c91ba0f532df2a9e194e27ab50e988f5e4c33f5a7893918320c661) to see the code between base version and static version.
 
+#### App.jsx
+https://github.com/deta-aditya/lullet-temp/blob/2-static-version/src/App.jsx?plain=1
