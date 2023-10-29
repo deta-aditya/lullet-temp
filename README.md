@@ -55,7 +55,8 @@ Now that the components have been identified, let's start building them.
 
 We'll be using [Chakra UI](https://chakra-ui.com/)https://chakra-ui.com/ to ease up the stying. Check the diff [here](https://github.com/deta-aditya/lullet-temp/compare/main...2-static-version#diff-d274a54187c91ba0f532df2a9e194e27ab50e988f5e4c33f5a7893918320c661) to see the code changes.
 
-#### Folder Structure
+#### Folder structure
+
 Making the folder structure to reflect the hierarcy of the UI components can help our future self and other teammates in finding them. 
 ```
 src/
@@ -72,6 +73,7 @@ src/
 ```
 
 #### Constraints
+
 In this step, we focus on building the static version of the UI components. This means, we should not think about states, events, or effects yet. Props are alright, especially if they are fed with static dummy data. The result will only render UI without any behavior, and that is expected.
 
 For example, take a look at the static `DailyLogCard` component:
@@ -107,6 +109,17 @@ This component accepts a props of `dailyLog`, which is an object with `dateForma
 
 Do the same for other components and we're good to go.
 
-#### Dummy Data
+#### Dummy data
 
 Since we don't have real data yet, dummy data will do the job for now. You can find them [here](https://github.com/deta-aditya/lullet-temp/blob/2-static-version/src/components/PageBody/constants.js).
+
+### 3. Find the states
+
+In this step, we need to identify which independent values are changing over time. Often, these values are fewer than we initially imagine. This is because most values that we thought are always changing are computed, and thus, not independent. Identifying these is very important, since not everything that changes is always a state.
+
+This step is an analysis stage, thus, there are no code changes.
+
+The candidate for states according to the UI are: 
+* Search input
+* Type filter
+* Bullet points
