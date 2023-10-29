@@ -23,8 +23,8 @@ The objective of this project is to build Lullet following the Thinking in React
 2. User can filter the bullet points' type by clicking the filter tab chips.
 3. User can type in a new bullet point in a daily log card, be it a new one or existing.
 4. User can press \e to change the bullet point into event, \n into note, and \t into task.
-5. User can click on a written task to cyclically finish it, cancel it and reset it to to do.
-6. User can save an daily log card that has changed.
+5. User can click on a written task to cyclically finish it, cancel it and reset it to todo.
+6. User can save a daily log card that has changed.
 
 ## Steps
 
