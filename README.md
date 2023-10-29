@@ -39,17 +39,74 @@ There is no exact rule in identifying components. To keep things consistent, I a
 - Daily Log Card (yellow)
 - Bullet Item (blue)
 
+
 <img width="846" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/f0c8cafb-d7dd-4d76-a4ff-54d16e2375fd">
 
-Another easy way to identify potential components is by its hierarchy. In the prototype, it is noticeable that the whole page is divided between header (yellow) and body (red), which are another great potential components.
 
-<img width="846" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/a0f6923f-37c2-46de-9632-3d8d1f855cd1">
+Another way to identify potential components is by its hierarchy. In the prototype, it is noticeable that the whole page can be described as a hierarcy of smaller UI components as follows:
 
-Now that we have identify the components, let's start building them.
+
+<img width="500" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/3967a12e-114d-4639-bea2-da45a13c2b0d">
+
+
+Now that the components have been identified, let's start building them.
 
 ### 2. Build the static version
 
-We'll be using [Chakra UI](https://chakra-ui.com/)https://chakra-ui.com/ to ease up the stying. Check the diff [here](https://github.com/deta-aditya/lullet-temp/compare/main...2-static-version#diff-d274a54187c91ba0f532df2a9e194e27ab50e988f5e4c33f5a7893918320c661) to see the code between base version and static version.
+We'll be using [Chakra UI](https://chakra-ui.com/)https://chakra-ui.com/ to ease up the stying. Check the diff [here](https://github.com/deta-aditya/lullet-temp/compare/main...2-static-version#diff-d274a54187c91ba0f532df2a9e194e27ab50e988f5e4c33f5a7893918320c661) to see the code changes.
 
-#### App.jsx
-https://github.com/deta-aditya/lullet-temp/blob/2-static-version/src/App.jsx?plain=1
+#### Folder Structure
+Making the folder structure to reflect the hierarcy of the UI components can help our future self and other teammates in finding them. 
+```
+src/
+└── components/
+    ├── PageHeader/
+    │   └── components/
+    │       ├── FilterTab/
+    │       └── SearchInput/
+    └── PageBody/
+        └── components/
+            └── DailyLogCard/
+                └── components/
+                    └── BulletPoint/
+```
+
+#### Constraints
+In this step, we focus on building the static version of the UI components. This means, we should not think about states, events, or effects yet. Props are alright, especially if they are fed with static dummy data. The result will only render UI without any behavior, and that is expected.
+
+For example, take a look at the static `DailyLogCard` component:
+
+```js
+function DailyLogCard({ dailyLog }) {
+  return (
+    <Card width="480px">
+      <CardHeader display="flex" alignItems="center" gap="16px">
+        <Heading fontSize="24px">{dailyLog.dateFormatted}</Heading>
+        <Button
+          variant="unstyled"
+          px="16px"
+          py="4px"
+          bg="blue.100"
+          h="auto"
+          borderRadius="8px"
+        >
+          Save
+        </Button>
+      </CardHeader>
+      <CardBody>
+        {dailyLog.bulletPoints.map((bulletPoint) => (
+          <BulletPoint key={bulletPoint.id} bulletPoint={bulletPoint} />
+        ))}
+      </CardBody>
+    </Card>
+  );
+}
+```
+
+This component accepts a props of `dailyLog`, which is an object with `dateFormatted` and `bulletPoints`. Those values are either rendered or passed to the next components. Notice how there is no single states or callbacks/events in the code.
+
+Do the same for other components and we're good to go.
+
+#### Dummy Data
+
+Since we don't have real data yet, dummy data will do the job for now. You can find them [here](https://github.com/deta-aditya/lullet-temp/blob/2-static-version/src/components/PageBody/constants.js).
