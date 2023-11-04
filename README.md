@@ -132,4 +132,6 @@ This value represents list of bullet points in a daily log. It can be implemente
 
 But wouldn't bullet points be filtered by search input and type filter, thus making it a derived value instead of a state? That's a fair argument. However, bullet points _the state_ is different to bullet points _the displayed_. The latter is what displayed to the user, and it is a derived value, not a state. Why? Because it is dependent of all of the states we listed above.
 
+<img width="500" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/11f50d3f-117e-4303-8a64-c97aded70017">
+
 That's all for the states, for now. We can proceed to the next step.
