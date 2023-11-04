@@ -39,15 +39,11 @@ There is no exact rule in identifying components. To keep things consistent, I a
 - Daily Log Card (yellow)
 - Bullet Item (blue)
 
-
 <img width="846" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/f0c8cafb-d7dd-4d76-a4ff-54d16e2375fd">
-
 
 Another way to identify potential components is by its hierarchy. In the prototype, it is noticeable that the whole page can be described as a hierarcy of smaller UI components as follows:
 
-
 <img width="500" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/3967a12e-114d-4639-bea2-da45a13c2b0d">
-
 
 Now that the components have been identified, let's start building them.
 
@@ -57,7 +53,8 @@ We'll be using [Chakra UI](https://chakra-ui.com/)https://chakra-ui.com/ to ease
 
 #### Folder structure
 
-Making the folder structure to reflect the hierarcy of the UI components can help our future self and other teammates in finding them. 
+Making the folder structure to reflect the hierarcy of the UI components can help our future self and other teammates in finding them.
+
 ```
 src/
 └── components/
@@ -115,11 +112,24 @@ Since we don't have real data yet, dummy data will do the job for now. You can f
 
 ### 3. Find the states
 
-In this step, we need to identify which independent values are changing over time. Often, these values are fewer than we initially imagine. This is because most values that we thought are always changing are computed, and thus, not independent. Identifying these is very important, since not everything that changes is always a state.
+In this step, we need to identify which independent values are changing over time. Often, these values are fewer than we initially imagine. This is because most values that we thought are always changing are derived, and thus, not independent. Identifying these is very important, since not everything that changes is always a state.
 
 This step is an analysis stage, thus, there are no code changes.
 
-The candidate for states according to the UI are: 
-* Search input
-* Type filter
-* Bullet points
+The candidate for states according to the UI are:
+
+#### Search Input
+
+Not to be confused with Search Input component, this value represents user's search input. It will be a string value, probably with some extra rules. Most importantly, it can't be derived from other states.
+
+#### Type filter
+
+This value represents the type filter visualized by Filter Tab component. Its type should be an enumeration type with possible values of `task-todo`, `task-completed`, `task-cancelled`, `event`, and `note`. Just like search input, this value is not a derivation of other states.
+
+#### Bullet points
+
+This value represents list of bullet points in a daily log. It can be implemented as a list of bullet point type. Bullet point type is an object with property of `id`, `type`, and `value`.
+
+But wouldn't bullet points be filtered by search input and type filter, thus making it a derived value instead of a state? That's a fair argument. However, bullet points _the state_ is different to bullet points _the displayed_. The latter is what displayed to the user, and it is a derived value, not be a state. Why? Because it is dependent from all of the states we listed above.
+
+That's all for the states, for now. We can proceed to the next step.
