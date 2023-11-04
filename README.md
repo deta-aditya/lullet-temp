@@ -130,6 +130,6 @@ This value represents the type filter visualized by Filter Tab component. Its ty
 
 This value represents list of bullet points in a daily log. It can be implemented as a list of bullet point type. Bullet point type is an object with property of `id`, `type`, and `value`.
 
-But wouldn't bullet points be filtered by search input and type filter, thus making it a derived value instead of a state? That's a fair argument. However, bullet points _the state_ is different to bullet points _the displayed_. The latter is what displayed to the user, and it is a derived value, not be a state. Why? Because it is dependent from all of the states we listed above.
+But wouldn't bullet points be filtered by search input and type filter, thus making it a derived value instead of a state? That's a fair argument. However, bullet points _the state_ is different to bullet points _the displayed_. The latter is what displayed to the user, and it is a derived value, not a state. Why? Because it is dependent of all of the states we listed above.
 
 That's all for the states, for now. We can proceed to the next step.
