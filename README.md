@@ -124,7 +124,7 @@ Not to be confused with Search Input component, this value represents user's sea
 
 #### Type filter
 
-This value represents the type filter visualized by Filter Tab component. Its type should be an enumeration type with possible values of `task-todo`, `task-completed`, `task-cancelled`, `event`, and `note`. Just like search input, this value is not a derivation of other states.
+This value represents the type filter visualized by Filter Tab component. Its type should be an enumeration type with possible values of `all`, `task-todo`, `task-completed`, `task-cancelled`, `event`, and `note`. Just like search input, this value is not a derivation of other states.
 
 #### Bullet points
 
@@ -135,3 +135,60 @@ But wouldn't bullet points be filtered by search input and type filter, thus mak
 <img width="500" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/11f50d3f-117e-4303-8a64-c97aded70017">
 
 That's all for the states, for now. We can proceed to the next step.
+
+### 4. Identify where the states should live
+
+In this step, we'll analyze the suitable location for each states and write some code. Check [here](https://github.com/deta-aditya/lullet-temp/compare/2-static-version...4-write-states) to see the code changes.
+
+#### Identifying states location
+
+1. **Search Input**. This state is used by Search Input component and Daily Log Card component for filtering the values. The common ancestor of those components are App, which happens to be the root component. That's where the state should live.
+
+2. **Type Filter**. It is used by Filter Tab component and once Daily Log Card component for displaying values of a certain type. Same as above, the common parents for those components are App. Therefore, it should live in App component.
+
+3. **Bullet Points**. This is the state that will be used to represent bullet points inside a Daily Log Card component. Since we'll have multiple Daily Log Card components, we may be able to put this state at Page Body component, its parent. However, bullet points from one daily log is not used by another. It makes more sense to put the state inside Daily Log Card, because it is the only user of the state, for now.
+
+#### Writing the code
+
+We'll use React's `useState` function to create a state. It will return a tuple (which is represented by a fixed-sized JavaScript array) whose first value is the state itself, and second value is the state setter function. For now, let's **ignore** the setter function and focus only on the state value.
+
+Here is the `App` component after the states are added.
+
+```js
+function App() {
+  const [searchQuery] = useState();
+  const [typeFilter] = useState();
+
+  return (
+    <Flex h="100vh" flexDir="column">
+      <PageHeader searchQuery={searchQuery} typeFilter={typeFilter} />
+      <PageBody searchQuery={searchQuery} typeFilter={typeFilter} />
+    </Flex>
+  );
+}
+```
+
+In addition to adding states, new props should be added to `PageHeader` and `PageBody` so they can use the state's value. Keep adding props as needed until each of the state value reaches the bottom of the component tree where it is needed.
+
+Right now, you might be wondering, why are we ignoring the "prop drilling" and "re-render" issue? These are a slightly more advanced topics that need their own articles. For now, we should focus on making it work without error first, using only Thinking in React principle.
+
+#### Default value
+
+Each states should have their own default value. React's `useState` allows us to pass a default value as the first parameter. In fact, if we don't pass any default value, it will `undefined`. This can cause a lot of headaches in the future, because `undefined` should not be a valid value for our states.
+
+```js
+const [searchQuery] = useState(); // default value is `undefined`
+const [searchQuery] = useState(""); // default value is ""
+```
+
+Preventing invalid value from entering our states is important to reduce bugs and incorrectness of our code. One of the approach to solve it by introducing static typing such as TypeScript. But that's a topic for another day, since it is a whole new language to learn. While using JavaScript forces us to be extra careful, it is still enough to make a working product. Just like what we said before, let's focus on making the whole app works!
+
+The default values for each of states are as follows:
+
+| State          | Default Value           |
+| -------------- | ----------------------- |
+| `searchInput`  | `""`                    |
+| `typeFilter`   | `"all"`                 |
+| `bulletPoints` | `dailyLog.bulletPoints` |
+
+For `bulletPoints` state, its default value is given by the props `dailyLog`. Check [the code](https://github.com/deta-aditya/lullet-temp/blob/8a9d3e3162df3bfb64113f98ea5af14951105d9b/src/components/PageBody/components/DailyLogCard/index.jsx#L6) to see how it is written.
