@@ -148,6 +148,8 @@ In this step, we'll analyze the suitable location for each states and write some
 
 3. **Bullet Points**. This is the state that will be used to represent bullet points inside a Daily Log Card component. Since we'll have multiple Daily Log Card components, we may be able to put this state at Page Body component, its parent. However, bullet points from one daily log is not used by another. It makes more sense to put the state inside Daily Log Card, because it is the only user of the state, for now.
 
+(Illustrate)
+
 #### Writing the code
 
 We'll use React's `useState` function to create a state. It will return a tuple (which is represented by a fixed-sized JavaScript array) whose first value is the state itself, and second value is the state setter function. For now, let's **ignore** the setter function and focus only on the state value.
@@ -192,3 +194,42 @@ The default values for each of states are as follows:
 | `bulletPoints` | `dailyLog.bulletPoints` |
 
 For `bulletPoints` state, its default value is given by the props `dailyLog`. Check [the code](https://github.com/deta-aditya/lullet-temp/blob/8a9d3e3162df3bfb64113f98ea5af14951105d9b/src/components/PageBody/components/DailyLogCard/index.jsx#L6) to see how it is written.
+
+### 5. Add inverse data flow
+
+So far, we have only coded the downward flow of our React app. In this step, we will be adding the upward flow. What's the difference between the two flows?
+
+In a React-based web application, data flows in one direction. Downward flow is a term for data that flows from states to components and to its children components. This happens during the render (when displaying things to the browser). Upward flow means the opposite, which is a term for data that flows from components to its parents, and eventually, to states. It is triggered when a component dispatched an event, such as click, keydown, etc.
+
+(Illustrate)
+
+This part involves a lot of coding. As usual, you can check the code changes [here](https://github.com/deta-aditya/lullet-temp/compare/4-write-states...5-handle-events).
+
+#### Component's events
+
+Components may have events. An event is something that may happen inside a component, usually the result of user interaction or its children's event. These events can be handled by the component's user. In React, an event is represented as props that accepts function. To handle it, the component's user must pass a "callback" function to the event props. To differentiate data vs event props, usually event props are prefixed with `on`, such as `onClick`, `onOpen`, etc.
+
+Lullet's components will have their own events that can be handled by their parent component. Most of the time, states are mutated during event handling. If it's still confusing, here is the table of events for each components in Lullet:
+
+| Component     | Events                | Mutates        |
+| ------------- | --------------------- | -------------- |
+| `PageHeader`  | `onSearchQueryChange` | `searchQuery`  |
+|               | `onTypeFilterChange`  | `typeFilter`   |
+| `SearchInput` | `onSearchQueryChange` | `searchQuery`  |
+| `BulletPoint` | `onTextChange`        | `bulletPoints` |
+|               | `onRequestNewPoint`   | `bulletPoints` |
+|               | `onFirstTimeFocus`    | `bulletPoints` |
+|               | `onTransformToType`   | `bulletPoints` |
+
+Turns out, only `PageHeader`, `SearchInput`, and `BulletPoint` trigger handleable events. Even `onSearchQueryChange` event is not `PageHeader`'s original, as it is forwarded from `SearchInput`.
+
+Each events contains its own logic to mutate states. Some of them are as simple as just changing a value with new one, while others (especially in `DailyLogCard` component) seem pretty complicated. Try reading the code slowly, and you'll realize it's actually not _that_ complicated. All they do is just changing bullet point's object fields or adding a new one.
+
+Also don't forget to add the second tuple value to the states. These second values are setter functions that trigger re-render and changes the content of their respective first tuple values with a new one.
+
+```js
+const [searchQuery, setSearchQuery] = useState("");
+const [typeFilter, setTypeFilter] = useState("all");
+```
+
+And that's it! The web should work alright for now.
