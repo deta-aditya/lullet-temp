@@ -148,7 +148,7 @@ In this step, we'll analyze the suitable location for each states and write some
 
 3. **Bullet Points**. This is the state that will be used to represent bullet points inside a Daily Log Card component. Since we'll have multiple Daily Log Card components, we may be able to put this state at Page Body component, its parent. However, bullet points from one daily log is not used by another. It makes more sense to put the state inside Daily Log Card, because it is the only user of the state, for now.
 
-(Illustrate)
+<img width="500" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/2088d70c-bb79-460a-be1f-6a622306818d">
 
 #### Writing the code
 
@@ -201,7 +201,7 @@ So far, we have only coded the downward flow of our React app. In this step, we 
 
 In a React-based web application, data flows in one direction. Downward flow is a term for data that flows from states to components and to its children components. This happens during the render (when displaying things to the browser). Upward flow means the opposite, which is a term for data that flows from components to its parents, and eventually, to states. It is triggered when a component dispatched an event, such as click, keydown, etc.
 
-(Illustrate)
+<img width="500" alt="image" src="https://github.com/deta-aditya/lullet-temp/assets/14936837/43cffc3b-73c7-4402-b500-65ca793251f5">
 
 This part involves a lot of coding. As usual, you can check the code changes [here](https://github.com/deta-aditya/lullet-temp/compare/4-write-states...5-handle-events).
 
